@@ -1,0 +1,1359 @@
+================================================================
+FDS (Fundamentals of Data Science) - PRACTICAL SLIPS SOLUTIONS
+================================================================
+
+----------------------------------------------------------------
+SLIP NO. 1
+----------------------------------------------------------------
+
+Q.2 A) Pie plot for frequency of three species of Iris data (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+species_count = df['species'].value_counts()
+
+plt.figure(figsize=(6, 6))
+plt.pie(species_count, labels=species_count.index, autopct='%1.1f%%', startangle=90,
+        colors=['skyblue', 'lightgreen', 'lightcoral'])
+plt.title('Frequency of Iris Species')
+plt.axis('equal')
+plt.show()
+
+
+Q.2 B) Basic statistical details of the data (winequality-red.csv)
+
+import pandas as pd
+
+df = pd.read_csv('winequality-red.csv')
+basic_stats = df.describe()
+print(basic_stats)
+
+
+----------------------------------------------------------------
+SLIP NO. 2
+----------------------------------------------------------------
+
+Q.2 A) Handling Missing Values - Replace missing values of salary and age with mean (Data.csv)
+
+import pandas as pd
+
+df = pd.read_csv('Data.csv')
+print("Dataset before handling missing values:")
+print(df)
+
+df['salary'].fillna(df['salary'].mean(), inplace=True)
+df['age'].fillna(df['age'].mean(), inplace=True)
+
+print("\nDataset after handling missing values:")
+print(df)
+
+df.to_csv('Data_Updated.csv', index=False)
+
+
+Q.2 B) Line plot of Name vs Salary (Data.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Data.csv')
+
+plt.figure(figsize=(8, 6))
+plt.plot(df['name'], df['salary'], marker='o', color='b', linestyle='-', markersize=8)
+plt.title('Name vs Salary', fontsize=16)
+plt.xlabel('Name', fontsize=12)
+plt.ylabel('Salary', fontsize=12)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+Q.2 C) Load heights_weights.csv - Print first 10, last 10, random 20 rows and shape
+
+import pandas as pd
+
+df = pd.read_csv('heights_weights.csv')
+
+print(f"Shape of the dataset: {df.shape}")
+
+print("\nFirst 10 rows of the dataset:")
+print(df.head(10))
+
+print("\nLast 10 rows of the dataset:")
+print(df.tail(10))
+
+print("\nRandom 20 rows of the dataset:")
+print(df.sample(20))
+
+
+----------------------------------------------------------------
+SLIP NO. 3
+----------------------------------------------------------------
+
+Q.2 A) Box plots for Iris features across three species (iris.csv)
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+sns.set(style="whitegrid")
+
+features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+plt.figure(figsize=(15, 10))
+
+for i, feature in enumerate(features, start=1):
+    plt.subplot(2, 2, i)
+    sns.boxplot(x='species', y=feature, data=df)
+    plt.title(f'Box plot of {feature} by Species')
+    plt.xlabel('Species')
+    plt.ylabel(feature)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Basic statistical details (Heights and Weights Dataset)
+
+import pandas as pd
+
+df = pd.read_csv('heights_weights.csv')
+basic_stats = df.describe()
+print("Basic Statistical Details:")
+print(basic_stats)
+
+
+----------------------------------------------------------------
+SLIP NO. 4
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+# Line Chart
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+# Scatter Plot
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+# Histogram
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+# Box Plot
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Shape, rows-columns, data types, feature names and description (User_Data.csv)
+
+import pandas as pd
+
+df = pd.read_csv('User_Data.csv')
+
+print(f"Shape of the dataset: {df.shape}")
+num_rows, num_columns = df.shape
+print(f"Number of Rows: {num_rows}")
+print(f"Number of Columns: {num_columns}")
+
+print("\nData Types of Each Feature:")
+print(df.dtypes)
+
+print("\nFeature Names:")
+print(df.columns.tolist())
+
+print("\nDescription of the Data:")
+print(df.describe(include='all'))
+
+
+----------------------------------------------------------------
+SLIP NO. 5
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.random.randint(1, 101, 50)
+plt.figure(figsize=(12, 10))
+
+# Line Chart
+plt.subplot(2, 2, 1)
+plt.plot(data, color='blue', marker='o', linestyle='-', label='Random Data')
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+plt.legend()
+
+# Scatter Plot
+plt.subplot(2, 2, 2)
+plt.scatter(range(50), data, color='red', label='Random Data')
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+plt.legend()
+
+# Histogram
+plt.subplot(2, 2, 3)
+plt.hist(data, bins=10, color='green', edgecolor='black')
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+# Box Plot
+plt.subplot(2, 2, 4)
+plt.boxplot(data, patch_artist=True, boxprops=dict(facecolor='orange'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Shape, rows-columns, data types, feature names and description (User_Data.csv)
+
+import pandas as pd
+
+data = pd.read_csv('User_Data.csv')
+
+print("Shape of the data (rows, columns):", data.shape)
+print("Number of rows:", data.shape[0])
+print("Number of columns:", data.shape[1])
+
+print("\nData types of each column:")
+print(data.dtypes)
+
+print("\nFeature names (columns):")
+print(list(data.columns))
+
+print("\nDescription of the data:")
+print(data.describe())
+
+
+----------------------------------------------------------------
+SLIP NO. 6
+----------------------------------------------------------------
+
+Q.2 A) Handling Missing Values - Replace missing salary and age with mean (Data.csv)
+
+import pandas as pd
+
+data = pd.read_csv('Data.csv')
+print("Data before handling missing values:")
+print(data)
+
+mean_salary = data['salary'].mean()
+mean_age = data['age'].mean()
+
+data['salary'].fillna(mean_salary, inplace=True)
+data['age'].fillna(mean_age, inplace=True)
+
+print("\nData after replacing missing values in 'salary' and 'age':")
+print(data)
+
+data.to_csv('Data_Cleaned.csv', index=False)
+
+
+Q.2 B) Line plot of Name vs Salary (Data.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.read_csv('Data.csv')
+
+plt.figure(figsize=(10, 6))
+plt.plot(data['name'], data['salary'], marker='o', color='b', linestyle='-', label='Salary')
+plt.title('Name vs Salary', fontsize=16)
+plt.xlabel('Name', fontsize=12)
+plt.ylabel('Salary', fontsize=12)
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 8
+----------------------------------------------------------------
+
+Q.2) Standardizing Data using StandardScaler (winequality-red.csv)
+
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+df = pd.read_csv('winequality-red.csv')
+features = df.columns[:-1]
+
+scaler = StandardScaler()
+standardized_data = scaler.fit_transform(df[features])
+standardized_df = pd.DataFrame(standardized_data, columns=features)
+
+print("Original Data:")
+print(df.head())
+
+print("\nStandardized Data:")
+print(standardized_df.head())
+
+standardized_df.to_csv('winequality_red_standardized.csv', index=False)
+
+
+----------------------------------------------------------------
+SLIP NO. 9
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart and Scatter plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 6))
+
+# Line Chart
+plt.subplot(1, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+# Scatter Plot
+plt.subplot(1, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Pie chart - Subject names vs Marks
+
+import matplotlib.pyplot as plt
+
+subjects = ['Math', 'Science', 'English', 'History', 'Art']
+marks = [85, 90, 78, 88, 92]
+
+plt.figure(figsize=(8, 8))
+plt.pie(marks, labels=subjects, autopct='%1.1f%%', startangle=140,
+        colors=['gold', 'lightcoral', 'lightskyblue', 'lightgreen', 'lightpink'])
+plt.title('Marks Distribution by Subject', fontsize=16)
+plt.axis('equal')
+plt.show()
+
+
+Q.2 C) Import winequality-red.csv: describe, shape, first 3 rows
+
+import pandas as pd
+
+df = pd.read_csv('winequality-red.csv')
+
+print("Describing the Dataset:")
+print(df.describe())
+
+print("\nShape of the Dataset:")
+print(df.shape)
+
+print("\nFirst 3 Rows of the Dataset:")
+print(df.head(3))
+
+
+----------------------------------------------------------------
+SLIP NO. 10
+----------------------------------------------------------------
+
+Q.2 A) Column-wise mean and median (SOCRHeightWeight.csv)
+
+import pandas as pd
+
+df = pd.read_csv('SOCRHeightWeight.csv')
+
+mean_values = df.mean()
+median_values = df.median()
+
+print("Column-wise Mean:")
+print(mean_values)
+
+print("\nColumn-wise Median:")
+print(median_values)
+
+
+Q.2 B) Sum of Manhattan distance between all pairs of points
+
+import numpy as np
+
+points = np.array([[1, 2], [3, 5], [4, 1], [8, 0]])
+
+def manhattan_distance(point1, point2):
+    return np.abs(point1[0] - point2[0]) + np.abs(point1[1] - point2[1])
+
+def total_manhattan_distance(points):
+    total_distance = 0
+    num_points = len(points)
+    for i in range(num_points):
+        for j in range(i + 1, num_points):
+            total_distance += manhattan_distance(points[i], points[j])
+    return total_distance
+
+result = total_manhattan_distance(points)
+print(f"Sum of Manhattan distances between all pairs of points: {result}")
+
+
+----------------------------------------------------------------
+SLIP NO. 11
+----------------------------------------------------------------
+
+Q.2 A) Pie plot for frequency of three species of Iris data (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+species_count = df['species'].value_counts()
+
+plt.figure(figsize=(8, 8))
+plt.pie(species_count, labels=species_count.index, autopct='%1.1f%%', startangle=90,
+        colors=['skyblue', 'lightgreen', 'lightcoral'])
+plt.title('Frequency of Iris Species', fontsize=16)
+plt.axis('equal')
+plt.show()
+
+
+Q.2 B) Basic statistical details (winequality-red.csv)
+
+import pandas as pd
+
+df = pd.read_csv('winequality-red.csv')
+basic_stats = df.describe()
+print("Basic Statistical Details:")
+print(basic_stats)
+
+
+----------------------------------------------------------------
+SLIP NO. 12
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+# Line Chart
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+# Scatter Plot
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+# Histogram
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+# Box Plot
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) DataFrame with name, salary, department - drop null and duplicate values
+
+import pandas as pd
+import numpy as np
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Hannah', 'Ivy', 'Ivy'],
+    'Salary': [70000, 80000, np.nan, 50000, 60000, 90000, np.nan, 80000, 70000, 60000],
+    'Department': ['HR', 'IT', 'Finance', 'IT', 'HR', 'Finance', 'IT', 'HR', None, 'Finance']
+}
+
+df = pd.DataFrame(data)
+print("Original DataFrame:")
+print(df)
+
+df_cleaned = df.dropna()
+print("\nModified DataFrame (after dropping null values):")
+print(df_cleaned)
+
+
+----------------------------------------------------------------
+SLIP NO. 13
+----------------------------------------------------------------
+
+Q.2 A) Scatter plot - Petal Length vs Petal Width (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+
+plt.figure(figsize=(10, 6))
+plt.scatter(df['petal_length'], df['petal_width'], c='blue', alpha=0.5, edgecolor='k')
+plt.title('Relationship between Petal Length and Petal Width', fontsize=16)
+plt.xlabel('Petal Length (cm)', fontsize=12)
+plt.ylabel('Petal Width (cm)', fontsize=12)
+plt.grid(True)
+plt.show()
+
+
+Q.2 B) Maximum and minimum value of a given flattened array
+
+import numpy as np
+
+array = np.array([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5])
+
+max_value = np.max(array)
+min_value = np.min(array)
+
+print(f"Flattened Array: {array}")
+print(f"Maximum Value: {max_value}")
+print(f"Minimum Value: {min_value}")
+
+
+----------------------------------------------------------------
+SLIP NO. 14
+----------------------------------------------------------------
+
+Q.2 A) Weighted average of a flattened array
+
+import numpy as np
+
+data = np.array([10, 20, 30, 40, 50])
+weights = np.array([1, 2, 3, 4, 5])
+
+weighted_average = np.average(data, weights=weights)
+
+print(f"Flattened Array: {data}")
+print(f"Weights: {weights}")
+print(f"Weighted Average: {weighted_average}")
+
+
+Q.2 B) Basic statistical details (advertising.csv)
+
+import pandas as pd
+
+df = pd.read_csv('advertising.csv')
+basic_stats = df.describe()
+print("Basic Statistical Details:")
+print(basic_stats)
+
+
+----------------------------------------------------------------
+SLIP NO. 15
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+# Line Chart
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+# Scatter Plot
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+# Histogram
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+# Box Plot
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Pie chart - Subject names vs Marks
+
+import matplotlib.pyplot as plt
+
+subjects = ['Math', 'Science', 'English', 'History', 'Art']
+marks = [85, 90, 78, 88, 92]
+
+plt.figure(figsize=(8, 8))
+plt.pie(marks, labels=subjects, autopct='%1.1f%%', startangle=90,
+        colors=['gold', 'lightcoral', 'lightskyblue', 'lightgreen', 'lightpink'])
+plt.title('Marks Distribution by Subject', fontsize=16)
+plt.axis('equal')
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 16
+----------------------------------------------------------------
+
+Q.2 A) Pie chart and Bar chart - Subject names vs Marks
+
+import matplotlib.pyplot as plt
+
+subjects = ['Math', 'Science', 'English', 'History', 'Art']
+marks = [85, 90, 78, 88, 92]
+
+plt.figure(figsize=(12, 6))
+
+# Pie Chart
+plt.subplot(1, 2, 1)
+plt.pie(marks, labels=subjects, autopct='%1.1f%%', startangle=90,
+        colors=['gold', 'lightcoral', 'lightskyblue', 'lightgreen', 'lightpink'])
+plt.title('Marks Distribution by Subject', fontsize=16)
+plt.axis('equal')
+
+# Bar Chart
+plt.subplot(1, 2, 2)
+plt.bar(subjects, marks, color='skyblue', edgecolor='black')
+plt.title('Marks by Subject', fontsize=16)
+plt.xlabel('Subjects', fontsize=12)
+plt.ylabel('Marks Obtained', fontsize=12)
+plt.ylim(0, 100)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) DataFrame for students with average age and graduation percentage
+
+import pandas as pd
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+    'Graduation_Percentage': [85.5, 90.0, 78.0, 88.5, 92.0],
+    'Age': [21, 22, 20, 23, 21]
+}
+
+df = pd.DataFrame(data)
+print("Students Information:")
+print(df)
+
+average_age = df['Age'].mean()
+average_graduation_percentage = df['Graduation_Percentage'].mean()
+
+print(f"\nAverage Age of Students: {average_age:.2f}")
+print(f"Average Graduation Percentage: {average_graduation_percentage:.2f}")
+
+
+----------------------------------------------------------------
+SLIP NO. 17
+----------------------------------------------------------------
+
+Q.2 A) Scatter plots comparing two features of Iris dataset
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv('iris.csv')
+sns.set(style="whitegrid")
+
+plt.figure(figsize=(12, 8))
+
+# Petal Length vs Petal Width
+plt.subplot(2, 2, 1)
+sns.scatterplot(data=df, x='petal_length', y='petal_width', hue='species', style='species', palette='deep')
+plt.title('Petal Length vs Petal Width')
+
+# Sepal Length vs Sepal Width
+plt.subplot(2, 2, 2)
+sns.scatterplot(data=df, x='sepal_length', y='sepal_width', hue='species', style='species', palette='deep')
+plt.title('Sepal Length vs Sepal Width')
+
+# Petal Length vs Sepal Length
+plt.subplot(2, 2, 3)
+sns.scatterplot(data=df, x='petal_length', y='sepal_length', hue='species', style='species', palette='deep')
+plt.title('Petal Length vs Sepal Length')
+
+# Petal Width vs Sepal Width
+plt.subplot(2, 2, 4)
+sns.scatterplot(data=df, x='petal_width', y='sepal_width', hue='species', style='species', palette='deep')
+plt.title('Petal Width vs Sepal Width')
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) DataFrame with name, age, salary, department - 10 rows
+
+import pandas as pd
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve',
+             'Frank', 'Grace', 'Hannah', 'Ivy', 'Jack'],
+    'Age': [25, 30, 22, 35, 29, 28, 32, 24, 27, 31],
+    'Salary': [50000, 60000, 55000, 70000, 65000,
+               58000, 62000, 72000, 48000, 52000],
+    'Department': ['HR', 'IT', 'Finance', 'Marketing', 'HR',
+                   'IT', 'Finance', 'HR', 'Marketing', 'IT']
+}
+
+df = pd.DataFrame(data)
+print("DataFrame:")
+print(df)
+
+
+----------------------------------------------------------------
+SLIP NO. 18
+----------------------------------------------------------------
+
+Q.2 A) Box plots for Iris features across three species (iris.csv)
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+sns.set(style="whitegrid")
+
+plt.figure(figsize=(12, 10))
+
+plt.subplot(2, 2, 1)
+sns.boxplot(x='species', y='sepal_length', data=df)
+plt.title('Sepal Length by Species')
+
+plt.subplot(2, 2, 2)
+sns.boxplot(x='species', y='sepal_width', data=df)
+plt.title('Sepal Width by Species')
+
+plt.subplot(2, 2, 3)
+sns.boxplot(x='species', y='petal_length', data=df)
+plt.title('Petal Length by Species')
+
+plt.subplot(2, 2, 4)
+sns.boxplot(x='species', y='petal_width', data=df)
+plt.title('Petal Width by Species')
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Heights and Weights dataset - first 5, last 5, random 10 rows
+
+import pandas as pd
+
+df = pd.read_csv('heights_weights.csv')
+
+print("First 5 Rows:")
+print(df.head())
+
+print("\nLast 5 Rows:")
+print(df.tail())
+
+print("\nRandom 10 Rows:")
+print(df.sample(10))
+
+
+----------------------------------------------------------------
+SLIP NO. 19
+----------------------------------------------------------------
+
+Q.2) Create DataFrame (name, age, percentage), shape/description, add duplicates/missing values
+
+import pandas as pd
+import numpy as np
+
+# 1. Create DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve',
+             'Frank', 'Grace', 'Hannah', 'Ivy', 'Jack'],
+    'Age': [23, 30, 22, 25, 29, 31, 28, 24, 27, 26],
+    'Percentage': [85.5, 90.0, 78.0, 88.5, 92.0,
+                   81.0, 75.0, 88.0, 95.0, 82.0]
+}
+df = pd.DataFrame(data)
+print("Initial DataFrame:")
+print(df)
+
+# 2. Shape, data types, feature names, description
+print("\nShape of the DataFrame:", df.shape)
+print("Number of Rows:", df.shape[0])
+print("Number of Columns:", df.shape[1])
+print("\nData Types:")
+print(df.dtypes)
+print("\nFeature Names:", df.columns.tolist())
+print("\nDescription of the Data:")
+print(df.describe())
+
+# 3. Add duplicate rows with missing values and 'Remarks' column
+duplicate_data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+    'Age': [23, 30, np.nan, 25, 29],
+    'Percentage': [85.5, 90.0, 78.0, 88.5, 92.0]
+}
+df_duplicates = pd.DataFrame(duplicate_data)
+df = pd.concat([df, df_duplicates], ignore_index=True)
+df['Remarks'] = ''
+
+print("\nUpdated DataFrame with Duplicates and Missing Values:")
+print(df)
+
+
+----------------------------------------------------------------
+SLIP NO. 20
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+# Line Chart
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+# Scatter Plot
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+# Histogram
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+# Box Plot
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Add two outliers to the array and display box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+outliers = [200, 250]
+random_data_with_outliers = np.append(random_data, outliers)
+
+plt.figure(figsize=(8, 6))
+plt.boxplot(random_data_with_outliers, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot with Outliers', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 21
+----------------------------------------------------------------
+
+Q.2 A) Bar plot for frequency of three species of Iris data (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+species_count = df['species'].value_counts()
+
+plt.figure(figsize=(8, 6))
+species_count.plot(kind='bar', color=['skyblue', 'lightgreen', 'lightcoral'])
+plt.title('Frequency of Iris Species', fontsize=16)
+plt.xlabel('Species', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+plt.xticks(rotation=45)
+plt.grid(axis='y')
+plt.show()
+
+
+Q.2 B) Histogram of three species of Iris data (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv('iris.csv')
+sns.set(style="whitegrid")
+
+plt.figure(figsize=(12, 8))
+
+plt.subplot(2, 2, 1)
+sns.histplot(data=df, x='sepal_length', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Sepal Length Distribution by Species')
+
+plt.subplot(2, 2, 2)
+sns.histplot(data=df, x='sepal_width', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Sepal Width Distribution by Species')
+
+plt.subplot(2, 2, 3)
+sns.histplot(data=df, x='petal_length', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Petal Length Distribution by Species')
+
+plt.subplot(2, 2, 4)
+sns.histplot(data=df, x='petal_width', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Petal Width Distribution by Species')
+
+plt.tight_layout()
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 22
+----------------------------------------------------------------
+
+Q.2) Rescaling, Standardizing and Normalizing Data (winequality-red.csv)
+
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, Normalizer
+
+df = pd.read_csv('winequality-red.csv')
+print("Original Dataset:")
+print(df.head())
+
+# a. Rescaling using MinMaxScaler
+minmax_scaler = MinMaxScaler()
+normalized_data = minmax_scaler.fit_transform(df)
+normalized_df = pd.DataFrame(normalized_data, columns=df.columns)
+print("\nNormalized Dataset using MinMaxScaler:")
+print(normalized_df.head())
+
+# b. Standardizing Data
+standard_scaler = StandardScaler()
+standardized_data = standard_scaler.fit_transform(df)
+standardized_df = pd.DataFrame(standardized_data, columns=df.columns)
+print("\nStandardized Dataset:")
+print(standardized_df.head())
+
+# c. Normalizing Data (unit norm)
+normalizer = Normalizer()
+normalized_unit_data = normalizer.fit_transform(df)
+normalized_unit_df = pd.DataFrame(normalized_unit_data, columns=df.columns)
+print("\nNormalized Dataset with Unit Norm:")
+print(normalized_unit_df.head())
+
+
+----------------------------------------------------------------
+SLIP NO. 23
+----------------------------------------------------------------
+
+Q.2) Rescaling, Standardizing and Binarizing Data (winequality-red.csv)
+
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, Binarizer
+
+df = pd.read_csv('winequality-red.csv')
+print("Original Dataset:")
+print(df.head())
+
+# a. Rescaling using MinMaxScaler
+minmax_scaler = MinMaxScaler()
+normalized_data = minmax_scaler.fit_transform(df)
+normalized_df = pd.DataFrame(normalized_data, columns=df.columns)
+print("\nNormalized Dataset using MinMaxScaler:")
+print(normalized_df.head())
+
+# b. Standardizing Data
+standard_scaler = StandardScaler()
+standardized_data = standard_scaler.fit_transform(df)
+standardized_df = pd.DataFrame(standardized_data, columns=df.columns)
+print("\nStandardized Dataset:")
+print(standardized_df.head())
+
+# c. Binarizing Data
+threshold = 0.5
+binarizer = Binarizer(threshold=threshold)
+binarized_data = binarizer.fit_transform(df)
+binarized_df = pd.DataFrame(binarized_data, columns=df.columns)
+print("\nBinarized Dataset (using threshold = {}):".format(threshold))
+print(binarized_df.head())
+
+
+----------------------------------------------------------------
+SLIP NO. 24
+----------------------------------------------------------------
+
+Q.2 A) Bar plot for frequency of three species of Iris data (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('iris.csv')
+species_count = df['species'].value_counts()
+
+plt.figure(figsize=(8, 6))
+species_count.plot(kind='bar', color=['skyblue', 'lightgreen', 'lightcoral'])
+plt.title('Frequency of Iris Species', fontsize=16)
+plt.xlabel('Species', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+plt.xticks(rotation=0)
+plt.grid(axis='y')
+plt.show()
+
+
+Q.2 B) Histogram of three species of Iris data (iris.csv)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv('iris.csv')
+sns.set(style="whitegrid")
+
+plt.figure(figsize=(12, 8))
+
+plt.subplot(2, 2, 1)
+sns.histplot(data=df, x='sepal_length', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Sepal Length Distribution by Species')
+
+plt.subplot(2, 2, 2)
+sns.histplot(data=df, x='sepal_width', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Sepal Width Distribution by Species')
+
+plt.subplot(2, 2, 3)
+sns.histplot(data=df, x='petal_length', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Petal Length Distribution by Species')
+
+plt.subplot(2, 2, 4)
+sns.histplot(data=df, x='petal_width', hue='species', bins=10, kde=True, alpha=0.7, multiple='stack')
+plt.title('Petal Width Distribution by Species')
+
+plt.tight_layout()
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 25
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Pie chart - Subject names vs Marks
+
+import matplotlib.pyplot as plt
+
+subjects = ['Math', 'Science', 'English', 'History', 'Art']
+marks = [85, 90, 78, 88, 92]
+
+plt.figure(figsize=(8, 8))
+plt.pie(marks, labels=subjects, autopct='%1.1f%%', startangle=90,
+        colors=['gold', 'lightcoral', 'lightskyblue', 'lightgreen', 'lightpink'])
+plt.title('Marks Distribution by Subject', fontsize=16)
+plt.axis('equal')
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 26
+----------------------------------------------------------------
+
+Q.2 A) Random array of 50 integers - Line chart, Scatter plot, Histogram, Box plot
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+plt.show()
+
+
+Q.2 B) Bar chart - Subject names vs Marks
+
+import matplotlib.pyplot as plt
+
+subjects = ['Math', 'Science', 'English', 'History', 'Art']
+marks = [85, 90, 78, 88, 92]
+
+plt.figure(figsize=(10, 6))
+plt.bar(subjects, marks, color=['skyblue', 'lightgreen', 'lightcoral', 'lightskyblue', 'lightpink'])
+plt.title('Marks Obtained in Different Subjects', fontsize=16)
+plt.xlabel('Subjects', fontsize=12)
+plt.ylabel('Marks', fontsize=12)
+plt.ylim(0, 100)
+plt.grid(axis='y')
+plt.show()
+
+
+----------------------------------------------------------------
+SLIP NO. 27
+----------------------------------------------------------------
+
+Q.2) OneHot Encoding on Country column and Label Encoding on Purchased column (data.csv)
+
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
+df = pd.read_csv('data.csv')
+print("Original Dataset:")
+print(df)
+
+# a. One-Hot Encoding on Country column
+one_hot_encoder = OneHotEncoder(sparse=False)
+country_encoded = one_hot_encoder.fit_transform(df[['country']])
+country_encoded_df = pd.DataFrame(country_encoded,
+                    columns=one_hot_encoder.get_feature_names_out(['country']))
+df_one_hot = pd.concat([df, country_encoded_df], axis=1).drop('country', axis=1)
+print("\nDataset after One-Hot Encoding on 'country':")
+print(df_one_hot)
+
+# b. Label Encoding on Purchased column
+label_encoder = LabelEncoder()
+df_one_hot['purchased'] = label_encoder.fit_transform(df_one_hot['purchased'])
+print("\nDataset after Label Encoding on 'purchased':")
+print(df_one_hot)
+
+
+----------------------------------------------------------------
+SLIP NO. 28
+----------------------------------------------------------------
+
+Q.2) DataFrame (name, age, percentage) - shape, description, add duplicates/missing values
+
+import pandas as pd
+import numpy as np
+
+# 1. Create DataFrame
+data = {
+    'name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve',
+             'Frank', 'Grace', 'Hannah', 'Ivy', 'Jack'],
+    'age': [23, 30, 22, 25, 29, 31, 28, 24, 27, 26],
+    'percentage': [85.5, 90.0, 78.0, 88.5, 92.0,
+                   81.0, 75.0, 88.0, 95.0, 82.0]
+}
+df = pd.DataFrame(data)
+print("Initial DataFrame:")
+print(df)
+
+# 2. Shape, data types, feature names, description
+print("\nShape of the DataFrame:", df.shape)
+print("Number of Rows:", df.shape[0])
+print("Number of Columns:", df.shape[1])
+print("\nData Types:")
+print(df.dtypes)
+print("\nFeature Names:", df.columns.tolist())
+print("\nDescription of the Data:")
+print(df.describe())
+print("\nBasic Statistical Details:")
+print(df.describe(include='all'))
+
+# 3. Add 5 rows with duplicate and missing values, add 'remarks' column
+duplicate_data = {
+    'name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+    'age': [23, 30, np.nan, 25, 29],
+    'percentage': [85.5, 90.0, 78.0, 88.5, 92.0]
+}
+df_duplicates = pd.DataFrame(duplicate_data)
+df = pd.concat([df, df_duplicates], ignore_index=True)
+df['remarks'] = ''
+
+print("\nUpdated DataFrame with Duplicates and Missing Values:")
+print(df)
+
+
+----------------------------------------------------------------
+SLIP NO. 29
+----------------------------------------------------------------
+
+Q.2) OneHot Encoding on Country column and Label Encoding on Purchased column (data.csv)
+
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
+df = pd.read_csv('data.csv')
+print("Original Dataset:")
+print(df)
+
+one_hot_encoder = OneHotEncoder(sparse=False)
+country_encoded = one_hot_encoder.fit_transform(df[['country']])
+country_encoded_df = pd.DataFrame(country_encoded,
+                    columns=one_hot_encoder.get_feature_names_out(['country']))
+df_one_hot = pd.concat([df, country_encoded_df], axis=1).drop('country', axis=1)
+print("\nDataset after One-Hot Encoding on 'country':")
+print(df_one_hot)
+
+label_encoder = LabelEncoder()
+df_one_hot['purchased'] = label_encoder.fit_transform(df_one_hot['purchased'])
+print("\nDataset after Label Encoding on 'purchased':")
+print(df_one_hot)
+
+
+----------------------------------------------------------------
+SLIP NO. 30
+----------------------------------------------------------------
+
+Q.2) Random array of 50 integers (4 plots) + Bar chart for subjects vs marks
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+random_data = np.random.randint(1, 101, size=50)
+plt.figure(figsize=(12, 10))
+
+plt.subplot(2, 2, 1)
+plt.plot(random_data, color='blue', marker='o', linestyle='-', markersize=5)
+plt.title('Line Chart', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+plt.grid(True)
+
+plt.subplot(2, 2, 2)
+plt.scatter(range(len(random_data)), random_data, color='green', alpha=0.7)
+plt.title('Scatter Plot', fontsize=14)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
+
+plt.subplot(2, 2, 3)
+plt.hist(random_data, bins=10, color='orange', edgecolor='black', alpha=0.7)
+plt.title('Histogram', fontsize=14)
+plt.xlabel('Value', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
+
+plt.subplot(2, 2, 4)
+plt.boxplot(random_data, patch_artist=True, boxprops=dict(facecolor='lightblue'))
+plt.title('Box Plot', fontsize=14)
+plt.ylabel('Value', fontsize=12)
+
+plt.tight_layout()
+
+# Bar Chart - Subjects vs Marks
+subjects = ['Math', 'Science', 'English', 'History', 'Art']
+marks = [85, 90, 78, 88, 92]
+
+plt.figure(figsize=(10, 6))
+plt.bar(subjects, marks, color=['skyblue', 'lightgreen', 'lightcoral', 'lightskyblue', 'lightpink'])
+plt.title('Marks Obtained in Different Subjects', fontsize=16)
+plt.xlabel('Subjects', fontsize=12)
+plt.ylabel('Marks', fontsize=12)
+plt.ylim(0, 100)
+plt.grid(axis='y')
+plt.show()
+
+
+================================================================
+END OF FDS PRACTICAL SLIPS SOLUTIONS
+================================================================
