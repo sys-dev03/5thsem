@@ -1,0 +1,59 @@
+//Write a Java program to create a thread for moving a ball inside a panel vertically. The ball should be created when the user clicks on the start button.
+
+import java.awt.*;
+import javax.swing.*;
+
+class Main extends JFrame implements Runnable {
+	Thread t;
+	int x, y;
+
+	Main() {
+		super();
+		t = new Thread(this);
+		x = 10;
+		y = 10;
+		t.start();
+		setSize(1000, 1000);
+		setVisible(true);
+		setTitle("BOUNCING BALL WINDOW");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public void run() {
+		try {
+			while (true) {
+				x += 10;
+				y += 10;
+				repaint();
+				Thread.sleep(1000);
+			}
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void paint(Graphics g) {
+
+		g.drawOval(x, y, 40, 40);
+
+	}
+
+	public static void main(String a[]) throws Exception {
+		Main t = new Main();
+		Thread.sleep(1000);
+	}
+}
+
+//Write a Java program using Spring to display the message “If you can't explain it
+simply, you don't understand it well enough”. 
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+	@GetMapping
+	public String hello() {
+		return "If you can't explain it simply, you don't understand it well enough";
+	}
+}

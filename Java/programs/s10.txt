@@ -1,0 +1,66 @@
+//Write a Java program to display the Current Date using spring. 
+
+import java.util.Date;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+	@GetMapping
+	public String hello() {
+		Date current_Date = new Date();
+		return current_Date.toString();
+	}
+}
+
+//Write a Java program to display first record from student table (RNo, SName, Per) onto
+the TextFields by clicking on button. (Assume Student table is already created)
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
+
+class Main implements ActionListener{
+	JTextField t1, t2, t3;
+	JButton b1;
+	JFrame f;
+	String rno, name, per;
+	
+	Main() throws SQLException, ClassNotFoundException{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+		Statement st = cn.createStatement();
+		ResultSet rs = st.executeQuery("select * from Student;");
+		b1 = new JButton("Click here to fetch");
+		t1 = new JTextField();
+		t2 = new JTextField();
+		t3 = new JTextField();
+		f = new JFrame();
+		b1.addActionListener(this);
+		
+		rs.next();
+		rno = rs.getString(1);
+		name = rs.getString(2);
+		per = rs.getString(3);
+		f.add(t1);
+		f.add(t2);
+		f.add(t3);
+		f.add(b1);
+		
+		f.setLayout(new GridLayout(4,1));
+		f.setVisible(true);
+		f.setSize(500,500);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		t1.setText(rno);
+		t2.setText(name);
+		t3.setText(per);
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		new Main();
+	}
+}

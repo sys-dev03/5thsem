@@ -1,0 +1,87 @@
+//Write a java program to display name and priority of a Thread.
+
+class Main{
+	public static void main(String[] args) {
+		String s;
+		int p;
+		Thread t = Thread.currentThread();
+		s = t.getName();
+		p = t.getPriority();
+		System.out.println("Current thread name: " + s);
+		System.out.println("Thread priority: " + p);
+	}
+}
+
+//Write a SERVLET program in java to accept details of student (SeatNo, Stud_Name,
+Class, Total_Marks). Calculate percentage and grade obtained and display details on
+page.
+
+//html
+<html>
+<body>
+	<form name="f1" method="Post" action="Student">
+		<fieldset>
+			<legend>
+				<b><i>Enter Student Details :</i></b>
+			</legend>
+			Enter Seat No : <input type="text" name="txtsno"><br>
+			<br> Enter Name <input type="text" name="txtnm"><br>
+			<br> Enter class :<input type="text" name="txtclass"><br>
+			<br>
+			<fieldset>
+				<legend>
+					<b><i>Enter Student Marks Details : </i></b>
+				</legend>
+				Subject 1 : <input type="text" name="txtsub1"><br>
+				<br> Subject 2 : <input type="text" name="txtsub2"><br>
+				<br> Subject 3 : <input type="text" name="txtsub3"><br>
+				<br>
+			</fieldset>
+		</fieldset>
+		<div align=center>
+			<input type="submit" value="Result">
+		</div>
+	</form>
+</body>
+</html>
+
+//servlet
+
+import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/Student")
+public class Student extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		int sno,s1,s2,s3,total;
+        String snm,sclass;
+        float per;
+        res.setContentType("text/html");
+        PrintWriter out=res.getWriter();
+        sno=Integer.parseInt(req.getParameter("txtsno"));
+        snm=req.getParameter("txtnm");
+        sclass=req.getParameter("txtclass");
+        s1=Integer.parseInt(req.getParameter("txtsub1"));
+        s2=Integer.parseInt(req.getParameter("txtsub2"));
+        s3=Integer.parseInt(req.getParameter("txtsub3"));
+        total=s1+s2+s3;
+        per=(total/3);
+        out.println("<html><body>");
+        out.print("<h2>Result of student</h2><br>");
+        out.println("<b><i>Roll No :</b></i>"+sno+"<br>");
+        out.println("<b><i>Name :</b></i>"+snm+"<br>");
+        out.println("<b><i>Class :</b></i>"+sclass+"<br>");
+        out.println("<b><i>Subject1:</b></i>"+s1+"<br>");
+        out.println("<b><i>Subject2:</b></i>"+s2+"<br>");
+        out.println("<b><i>Subject3:</b></i>"+s3+"<br>");
+        out.println("<b><i>Total :</b></i>"+total+"<br>");
+        out.println("<b><i>Percentage :</b></i>"+per+"<br>");
+        out.close();
+	}
+}

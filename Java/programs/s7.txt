@@ -1,0 +1,130 @@
+//Write a java program that implements a multi-thread application that has three threads. First thread generates random integer number after every one second, if the number is even; second thread computes the square of that number and print it. If the number is odd, the third thread computes the of cube of that number and print it.
+
+import java.util.*;
+class FirstThread extends Thread {
+	Random r = new Random();
+	public int n;
+
+	public void run() {
+		try {
+			for (int i = 0; i < 5; i++) {
+				n = r.nextInt(10);
+				System.out.println("Genrated Random number" + n);
+				if (n % 2 == 0) {
+					SecondThread t2 = new SecondThread(n);
+					t2.start();
+				} else {
+					ThirdThread t3 = new ThirdThread(n);
+					t3.start();
+				}
+				sleep(100);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class SecondThread extends Thread {
+	int square;
+
+	SecondThread(int n) {
+		square = n * n;
+	}
+
+	public void run() {
+		try {
+			System.out.println("Square of no: " + square);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class ThirdThread extends Thread {
+	int cube;
+
+	ThirdThread(int n) {
+		cube = n * n * n;
+	}
+
+	public void run() {
+		try {
+			System.out.println("cube of no" + cube);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+public class Main {
+	public static void main(String[] args) {
+		FirstThread t1 = new FirstThread();
+		t1.start();
+	}
+}
+
+//Write a java program for the following:
+i. To create a Product(Pid, Pname, Price) table.
+ii. Insert at least five records into the table.
+iii. Display all the records from a table. 
+
+import java.sql.*;
+import java.util.*;
+
+class Main {
+	static Connection cn;
+	static Statement st;
+	static ResultSet rs;
+	static Scanner sc = new Scanner(System.in);
+
+	public static void display() throws SQLException {
+		rs = st.executeQuery("select * from Product");
+
+		System.out.println("|| Product id || Name || Price ||");
+		while (rs.next()) {
+			System.out.println("||     " + rs.getInt("pid") + "      || " + rs.getString("pname") + "  ||   "
+					+ rs.getString("price") + "     ||");
+		}
+	}
+
+	public static void insert() throws SQLException {
+		PreparedStatement ps = cn.prepareStatement("Insert into product values(?,?,?);");
+		int pid;
+		String name, price;
+
+		System.out.println("Enter the product ID: ");
+		pid = sc.nextInt();
+		System.out.println("Enter the product name: ");
+		name = sc.next();
+		System.out.println("Enter the product price: ");
+		price = sc.next();
+		ps.setInt(1, pid);
+		ps.setString(2, name);
+		ps.setString(3, price);
+		ps.executeUpdate();
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+		st = cn.createStatement();
+		int choice = 0;
+
+		while (choice != 3) {
+			System.out.println("1. Insert. 2. Display. 3. Exit.");
+			System.out.print("Enter choice: ");
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				insert();
+				break;
+			case 2:
+				display();
+				break;
+			case 3:
+				System.exit(0);
+			}
+		}
+	}
+}

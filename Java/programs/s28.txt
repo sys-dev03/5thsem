@@ -1,0 +1,28 @@
+//Write a JSP script to accept a String from a user and display it in reverse order.
+
+<html>
+<body>
+	<form method = "post">
+		Enter a string: <input type = "text" name = "str1"><br><br>
+		<input type = "submit" value="Reverse">
+	</form>
+	<br><br>
+	<%
+		String str1 = request.getParameter("str1");
+		if(str1 != null && !str1.isEmpty()){
+			String revStr = new StringBuilder(str1).reverse().toString();
+			out.println("Original string: " + str1 + "<br>");
+			out.println("Reversed string: " + revStr + "<br>");
+		}
+	%>
+</body>
+</html>
+
+//Write a java program to display name of currently executing Thread in multithreading.
+
+class Main{
+	public static void main(String[] args) {
+		Thread t = Thread.currentThread();
+		System.out.println("Currently executing thread is: " + t.getName());
+	}
+}

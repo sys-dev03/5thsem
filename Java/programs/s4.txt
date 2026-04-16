@@ -1,0 +1,93 @@
+//Write a Java program using Runnable interface to blink Text on the frame.
+
+import java.awt.*;
+
+public class Main extends Frame implements Runnable {
+	Thread t;
+	Label l1;
+	int f;
+
+	public Main() {
+		t = new Thread(this);
+		t.start();
+		setLayout(null);
+		l1 = new Label("Hello JAVA");
+		l1.setBounds(100, 100, 100, 40);
+		add(l1);
+		setSize(300, 300);
+		setVisible(true);
+		f = 0;
+	}
+
+	public void run() {
+		try {
+			if (f == 0) {
+				t.sleep(200);
+				l1.setText("");
+				f = 1;
+			}
+			if (f == 1) {
+				t.sleep(200);
+				l1.setText("Hello Java");
+				f = 0;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		run();
+	}
+
+	public static void main(String args[]) {
+		new Main();
+	}
+}
+
+//Write a Java program to store city names and their STD codes using an appropriate
+collection and perform following operations:
+
+import java.util.*;
+
+class Main{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int choice = 0, code;
+		String city;
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		
+		while(choice != 4) {
+			System.out.println("1. Add a new city. 2. Remove a city. 3. Search for a city. 4. Exit");
+			System.out.print("Enter choice: ");
+			choice = sc.nextInt();
+			switch(choice) {
+			case 1:
+				System.out.print("Enter city name: ");
+				city = sc.next();
+				System.out.print("Enter city stdcode: ");
+				code = sc.nextInt();
+				if(hm.containsKey(city)) {
+					System.out.println("Already exist!");
+				}
+				else
+					hm.put(city, code);
+				break;
+			
+			case 2:
+				System.out.print("Enter city name: ");
+				city = sc.next();
+				hm.remove(city);
+				break;
+			case 3:
+				System.out.print("Enter city name: ");
+				city = sc.next();
+				if(hm.containsKey(city)) {
+					System.out.println(hm.get(city));
+				}
+				else
+					System.out.println("City doesn't exist!");
+				break;
+			case 4:
+				System.exit(0);
+			}
+		}
+	}
+}

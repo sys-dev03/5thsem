@@ -1,0 +1,74 @@
+//Write a java program to accept ‘N’ Integers from a user store them into LinkedList Collection and display only negative integers.
+
+import java.util.*;
+class Main {
+	public static void main(String[] args) {
+		int n;
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter the size of Linked List: ");
+		n = sc.nextInt();
+		LinkedList<Integer> ll = new LinkedList<Integer>();
+		for (int i = 0; i < n; i++) {
+			System.out.print("Enter the element: ");
+			ll.add(sc.nextInt());
+		}
+		Iterator<Integer> it = ll.iterator();
+		System.out.println("List of negative numbers: ");
+		while (it.hasNext()) {
+			int no = it.next();
+			if (no < 0)
+				System.out.println("\t" + no);
+		}
+	}
+}
+
+//Write a SERVLET application to accept username and password, search them into
+database, if found then display appropriate message on the browser otherwise display
+error message.
+
+//html
+<html>
+<body>
+<form method=post action="UserPass">
+User Name : <input type=text name=user><br><br>
+Password : <input type=text name=pass><br><br>
+<input type=submit value="Login">
+</form>
+</body>
+</html>
+
+//servlet
+import java.io.*;
+import java.sql.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/UserPass")
+public class UserPass extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		try {
+			String us = request.getParameter("user");
+			String pa = request.getParameter("pass");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+			Statement st = cn.createStatement();
+			ResultSet rs = st.executeQuery("select * from UserPass");
+			while (rs.next()) {
+				if (us.equals(rs.getString("user")) && pa.equals(rs.getString("pass")))
+					out.println("Valid user");
+				else
+					out.println("Invalid user");
+			}
+		} catch (Exception e) {
+			out.println(e);
+		}
+	}
+
+}

@@ -1,0 +1,74 @@
+//Write a Java program to delete the details of given employee (ENo EName Salary). Accept employee ID through command line. (Use PreparedStatement Interface)
+
+import java.sql.*;
+
+class Main {
+	public static void main(String args[]) {
+		Connection con;
+		PreparedStatement ps;
+		ResultSet rs;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+			if (con == null) {
+				System.out.println("Connection Failed....");
+				System.exit(1);
+			}
+			System.out.println("Connection Established...");
+			ps = con.prepareStatement("select * from employee where eid=?");
+			int id = Integer.parseInt(args[0]);
+			ps.setInt(1, id);
+
+			rs = ps.executeQuery();
+			System.out.println("eno\t" + "ename\t" + "salary");
+			while (rs.next()) {
+				System.out.println(
+						"\n" + rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3));
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
+
+//Write a JSP program to calculate sum of first and last digit of a given number. Display
+sum in Red Color with font size 18.
+
+//html
+<!DOCTYPE html>
+<html>
+<head>
+<title>PERFECT NUMBER</title>
+</head>
+<body>
+	<form action="Main.jsp" method="post">
+		Enter Number : <input type="text" name="num"> <input type="submit" value="Submit" name="num">
+	</form>
+</body>
+</html>
+
+//jsp
+<html>
+<body>
+	<%!int n, rem, r;%>
+	<%
+	n = Integer.parseInt(request.getParameter("num"));
+	if (n < 10) {
+		out.println("Sum of first and last digit is ");
+	%><font size=18 color=red><%=n%> </font>
+	<%
+	} else {
+	rem = n % 10;
+	do {
+		r = n % 10;
+		n = n / 10;
+	} while (n > 0);
+	n = rem + r;
+	out.println("Sum of first and last digit is: ");
+	%><font size=18 color=red><%=n%> </font>
+	<%
+	}
+	%>
+</body>
+</html>

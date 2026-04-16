@@ -1,0 +1,97 @@
+//1Write a java program to scroll the text from left to right continuously.
+
+import java.util.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the text to scroll: ");
+		String text = sc.nextLine();
+		int width = 20;
+		int position = 0;
+		int direction = 1;
+		while (true) {
+			for (int i = 0; i < width; i++) {
+				System.out.print(" ");
+			}
+			for (int i = 0; i < text.length(); i++) {
+				if (i + position >= 0 && i + position < width) {
+					System.out.print(text.charAt(i));
+				} else {
+					System.out.print(" ");
+				}
+			}
+			position += direction;
+			if (position == width - text.length() || position == 0) {
+				direction = -direction;
+			}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			for (int i = 0; i < width + text.length(); i++) {
+				System.out.print("\b");
+			}
+		}
+	}
+}
+
+//2Write a JSP script to accept username and password from user, if they are same then
+display “Login Successfully” message in Login.html file, otherwise display “Login
+Failed” Message in Error.html file.
+
+//Main.html
+<html>
+<head>
+<title>Login Page</title>
+</head>
+<body>
+	<form action="Main.jsp">
+		Enter User Id and Password
+		<br>UserId: <input type="text" name="id" /> <br>
+		<br> Password: <input type="text" name="pass" /> <br>
+		<br> <input type="submit" value="Sign In" />
+	</form>
+</body>
+</html>
+
+//Main.jsp
+<html>
+<head>
+<title>Check Credentials</title>
+</head>
+<body>
+<%
+        String uid=request.getParameter("id");
+        String password=request.getParameter("pass");
+        session.setAttribute("session-uid", uid);
+        if(uid.equals(password))
+        {
+			response.sendRedirect("login.html");
+        }
+        else
+		{
+            response.sendRedirect("error.html");
+        }
+%>
+</body>
+</html>
+
+//login.html
+<html>
+<head><title>Success Page</title></head>
+<body>
+        <h1>Login Successful..</h1>
+</body>
+</html>
+
+//error.html
+<html>
+<head><title>Sign-in Failed Page</title></head>
+<body>
+        <h1>User Id and Password are not same. Please try Again.</h1>
+</body>
+</html>

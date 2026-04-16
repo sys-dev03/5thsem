@@ -1,0 +1,63 @@
+//Write a Java program to display information about all columns in the DONAR table using ResultSetMetaData. 
+
+import java.sql.*;
+
+class Main{
+	public static void main(String args[]) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+
+			PreparedStatement ps = con.prepareStatement("select * from donar");
+			ResultSet rs = ps.executeQuery();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int col = rsmd.getColumnCount();
+
+			System.out.println("Total columns: " + col);
+			
+			for(int i=1;i<=col;i++) {
+				System.out.println("Column Name of column " + i + ": " + rsmd.getColumnName(i));
+				System.out.println("Column Type Name of column " + i + ": " + rsmd.getColumnTypeName(i));
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
+
+//Write a Java program to create LinkedList of integer objects and perform the following:
+
+import java.util.*;
+class Main{
+	
+	public static void main(String[] args) {
+		int choice = 0;
+		Scanner sc = new Scanner(System.in);
+		LinkedList<Integer> ll = new LinkedList<Integer>();
+		
+		while(choice != 5) {
+			System.out.println("1. Add element at the first. 2. Delete last element of the list. 3. Display size. 4 Display Linked List. 5"
+					+ ". Exit");
+			System.out.print("Enter choice: ");
+			choice = sc.nextInt();
+			switch(choice) {
+			case 1:
+				System.out.print("Enter element name: ");
+				ll.addFirst(sc.nextInt());
+				break;
+			case 2:
+				ll.removeLast();
+				break;
+			case 3:
+				System.out.println("Size of linked list is: " + ll.size());
+				break;
+			case 4:
+				System.out.println("Linked list is: " + ll);
+				break;
+			case 5:
+				System.exit(0);
+			}
+		}
+	}
+}

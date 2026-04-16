@@ -1,0 +1,68 @@
+//Write a java program to accept ‘N’ integers from a user. Store and display integers in sorted order having proper collection class. The collection should not accept duplicate elements.
+
+import java.util.*;
+
+public class Main
+{
+    public static void main(String[] args) 
+    {
+        TreeSet<Integer> ts = new TreeSet<Integer>();
+        int n;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter how many integers: ");
+        n = sc.nextInt();
+        for(int i=0;i<n;i++) {
+        	System.out.print("enter integer: ");
+        	ts.add(sc.nextInt());
+        }
+        System.out.println(ts);
+        sc.close();
+    }
+}
+
+//Write a Multithreading program in java to display the number’s between 1 to 100
+continuously in a TextField by clicking on button. (Use Runnable Interface)
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class Main extends Frame implements ActionListener, Runnable {
+	Thread y;
+	TextField t;
+	Button b;
+
+	Main() {
+		t = new TextField(20);
+		b = new Button("start");
+		setLayout(new FlowLayout());
+		add(b);
+		add(t);
+		b.addActionListener(this);
+		setSize(300, 300);
+		setVisible(true);
+		y = new Thread(this);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		String msg = e.getActionCommand();
+		if (msg.equals("start")) {
+			y.start();
+		}
+	}
+
+	public void run() {
+		for (int i = 1; i <= 100; i++) {
+			t.setText(i + "");
+			try {
+				Thread.sleep(100);
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	public static void main(String[] d) {
+		new Main();
+	}
+
+}
+

@@ -1,0 +1,84 @@
+//Write a java program to create a TreeSet, add some colors (String) and print out the content of TreeSet in ascending order.
+
+import java.util.*;
+public class Main
+{
+  public static void main(String []args)
+  {
+    Scanner sc=new Scanner(System.in);
+    TreeSet<String>a=new TreeSet<>();
+    System.out.print("\nEnter no of colors: ");
+    int n=sc.nextInt();
+    System.out.print("\nEnter " +n+ " elements: ");
+    for(int i=0;i<n;i++)
+    { 
+      a.add(sc.next());
+    }  
+    System.out.println("TreeSet elements in ascending order: "+a);
+    sc.close();
+  }
+}
+
+//Write a Java program to accept the details of Teacher (TNo, TName, Subject). Insert at
+least 5 Records into Teacher Table and display the details of Teacher who is teaching
+“JAVA” Subject. (Use PreparedStatement Interface) 
+
+import java.sql.*;
+import java.util.*;
+
+class Main {
+	static Connection cn;
+	static Statement st;
+	static ResultSet rs;
+	static Scanner sc = new Scanner(System.in);
+
+	public static void display() throws SQLException {
+		rs = st.executeQuery("select * from Teacher where subject = 'JAVA';");
+
+		System.out.println("|| Tno || TName || Subject ||");
+		while (rs.next()) {
+			System.out.println("||     " + rs.getInt("tno") + "      || " + rs.getString("tname") + "  ||   "
+					+ rs.getString("Subject") + "     ||");
+		}
+	}
+
+	public static void insert() throws SQLException {
+		PreparedStatement ps = cn.prepareStatement("Insert into teacher values(?,?,?);");
+		int tno;
+		String tname, sub;
+
+		System.out.println("Enter the Teacher no: ");
+		tno = sc.nextInt();
+		System.out.println("Enter the Teacher name: ");
+		tname = sc.next();
+		System.out.println("Enter the subject: ");
+		sub = sc.next();
+		ps.setInt(1, tno);
+		ps.setString(2, tname);
+		ps.setString(3, sub);
+		ps.executeUpdate();
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+		st = cn.createStatement();
+		int choice = 0;
+
+		while (choice != 3) {
+			System.out.println("1. Insert. 2. Display. 3. Exit.");
+			System.out.print("Enter choice: ");
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				insert();
+				break;
+			case 2:
+				display();
+				break;
+			case 3:
+				System.exit(0);
+			}
+		}
+	}
+}

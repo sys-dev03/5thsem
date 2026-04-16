@@ -1,0 +1,96 @@
+//Write a JSP program to display the details of Patient (PNo, PName, Address, age, disease) in tabular form on browser.
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<body>
+	<%@ page import="java.sql.*;"%>
+	<%!int pno, age;
+	String pname, paddress, disease;%>
+	<%
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+		Statement st = cn.createStatement();
+		ResultSet rs = st.executeQuery("select * from Patient");
+	%>
+	<table border="1">
+		<tr>
+			<td>Patient No</td>
+			<td>Patient Name</td>
+			<td>Patient Address</td>
+			<td>Age</td>
+			<td>Disease</td>
+		</tr>
+		<%
+		while (rs.next()) {
+		%>
+		<tr>
+			<td><%=rs.getInt("pno")%></td>
+			<td><%=rs.getString("pname")%></td>
+			<td><%=rs.getString("address")%></td>
+			<td><%=rs.getInt("age")%></td>
+			<td><%=rs.getString("disease")%></td>
+		</tr>
+		<%
+		}
+		cn.close();
+		} catch (Exception e) {
+		out.println(e);
+		}
+		%>
+	</table>
+</body>
+</html>
+
+//Write a Java program to create LinkedList of String objects and perform the following:
+
+import java.util.*;
+class Main{
+	
+	static void reverseLL(int n, LinkedList<String> ll) {
+		LinkedList<String> ll1 = new LinkedList<String>();
+		ll1.addAll(ll);
+		System.out.println("Linked list in reverse order is: ");
+		while(!ll1.isEmpty()){
+			System.out.print(ll1.getLast() + " ");
+			ll1.removeLast();
+		}
+		System.out.println();
+	}
+	
+	public static void main(String[] args) {
+		int choice = 0, n = 0;
+		Scanner sc = new Scanner(System.in);
+		String name = "";
+		LinkedList<String> ll = new LinkedList<String>();
+		
+		while(choice != 5) {
+			System.out.println("1. Add element at the end of the list. 2. Delete first element of the list. 3. Display in reverse. 4 Display Linked List. 5"
+					+ ". Exit");
+			System.out.print("Enter choice: ");
+			choice = sc.nextInt();
+			switch(choice) {
+			case 1:
+				System.out.print("Enter element name: ");
+				name = sc.next();
+				ll.addLast(name);
+				n++;
+				break;
+			case 2:
+				ll.removeFirst();
+				n--;
+				break;
+			case 3:
+				reverseLL(n, ll);
+				break;
+			case 4:
+				System.out.println(ll);
+				break;
+			case 5:
+				System.exit(0);
+			}
+		}
+	}
+}

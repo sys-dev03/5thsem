@@ -1,0 +1,106 @@
+//Write a java program to accept ‘N’ Subject Names from a user store them into LinkedList Collection and Display them by using Iterator interface.
+
+import java.util.*;
+class Main {
+	public static void main(String[] args) {
+		int n;
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter how many n subjects: ");
+		n = sc.nextInt();
+		LinkedList<String> ll = new LinkedList<String>();
+		for (int i = 0; i < n; i++) {
+			System.out.print("Enter subject: ");
+			ll.add(sc.next());
+		}
+		Iterator<String> it = ll.iterator();
+		System.out.println("Subjects are: ");
+		while (it.hasNext()) {
+				System.out.println("\t" + it.next());
+		}
+	}
+}
+
+//Write a java program to solve producer consumer problem in which a producer
+produces a value and consumer consume the value before producer generate the next
+value. (Hint: use thread synchronization) 
+
+class shop {
+	int material;
+	boolean flag = false;
+
+	public synchronized int get() {
+		while (flag == false) {
+			try {
+				wait();
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+		flag = false;
+		notify();
+		return material;
+	}
+
+	public synchronized void put(int value) {
+		while (flag == true) {
+			try {
+				wait();
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+		material = value;
+		flag = true;
+		notify();
+	}
+}
+
+class consumer extends Thread {
+	shop sh;
+	int no;
+
+	public consumer(shop shp, int no) {
+		sh = shp;
+		this.no = no;
+	}
+
+	public void run() {
+		int value = 0;
+		for (int i = 0; i < 10; i++) {
+			value = sh.get();
+			System.out.println("Consumer#" + this.no + "get:" + value);
+		}
+	}
+}
+
+class producer extends Thread {
+	shop sh;
+	int no;
+
+	public producer(shop s, int no) {
+		sh = s;
+		this.no = no;
+	}
+
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			sh.put(i);
+			System.out.println("Producer#" + this.no + "put:" + i);
+			try {
+				sleep((int) (Math.random() * 100));
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+	}
+}
+
+public class Main {
+	public static void main(String[] args) {
+		shop s = new shop();
+		producer p = new producer(s, 1);
+		consumer c = new consumer(s, 1);
+		p.start();
+		c.start();
+	}
+}

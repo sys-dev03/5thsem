@@ -1,0 +1,87 @@
+//Write a java program to define a thread for printing text on output screen for ‘n’ number of times. Create 3 threads and run them. Pass the text ‘n’ parameters to the thread constructor.
+
+public class Main extends Thread {
+	String str;
+	int n;
+
+	Main(String str,int n)
+  {
+    this.str=str;
+    this.n=n;
+  }
+
+	public void run() {
+		try {
+			for (int i = 0; i < n; i++) {
+				System.out.println(getName() + ":" + str);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		Main t1 = new Main("COVID19", 10);
+		Main t2 = new Main("LOCKDOWN2020", 20);
+		Main t3 = new Main("VACCINATED2021", 30);
+
+		t1.run();
+		t2.run();
+		t3.run();
+	}
+}
+
+//Write a JSP program to check whether a given number is prime or not. Display the result
+in red color.
+
+//Main.html
+<!DOCTYPE html>
+<html>
+<body>
+
+	<form action="Main.jsp" method="post">
+		Enter Number : <input type="text" name="num"> 
+		<input type="submit" value="Submit">
+	</form>
+
+</body>
+</html>
+
+//Main.jsp
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+int n = Integer.parseInt(request.getParameter("num"));
+int m = n / 2;
+int flag = 0;
+for (int i = 2; i <= m; i++) {
+	if (n % i == 0) {
+		flag = 1;
+		break;
+	}
+}
+if (flag == 0) {
+%>
+<html>
+<body>
+	<font size="14" color="red"> <%
+ out.println("\tIt is prime " + n);
+ %>
+	</font>
+
+</body>
+</html>
+<%
+} else {
+%>
+<html>
+<body>
+	<font size="14" color="red"> <%
+ out.println("\tIt is not prime " + n);
+ %>
+	</font>
+
+</body>
+</html>
+<%
+}
+%>

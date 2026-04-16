@@ -1,0 +1,111 @@
+//Write a java program for the implementation of synchronization.
+
+class Table {
+	synchronized void printTable(int n) {
+		for (int i = 1; i <= 5; i++) {
+			System.out.println(n * i);
+
+			try {
+				Thread.sleep(400);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+}
+
+class MyThread1 extends Thread {
+	Table t;
+
+	MyThread1(Table t) {
+		this.t = t;
+	}
+
+	public void run() {
+		t.printTable(5);
+	}
+}
+
+class MyThread2 extends Thread {
+	Table t;
+
+	MyThread2(Table t) {
+		this.t = t;
+	}
+
+	public void run() {
+		t.printTable(20);
+	}
+}
+
+class Main {
+	public static void main(String args[]) {
+		// shared object
+		Table obj = new Table();
+		MyThread1 t1 = new MyThread1(obj);
+		MyThread2 t2 = new MyThread2(obj);
+		t1.start();
+		t2.start();
+	}
+}
+
+//Write a Java Program for the implementation of scrollable ResultSet. Assume Teacher
+table with attributes (TID, TName, Salary) is already created. 
+
+import java.sql.*;
+import java.util.*;
+
+class Main {
+	public static void main(String args[]) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		int ch;
+		Scanner s = new Scanner(System.in);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "student");
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			rs = stmt.executeQuery("select * from teacher");
+			int count = 0;
+			while (rs.next())
+				count++;
+			System.out.println("Total Records are = " + count);
+			do {
+				System.out.println("1 First. 2 Last. 3 Next. 4 Prev. 5. Exit");
+				ch = s.nextInt();
+				switch (ch) {
+				case 1:
+					rs.first();
+					System.out.println("TId :" + rs.getInt(1) + " TName :" + rs.getString(2) + " TSalary : " + rs.getString(3));
+					break;
+				case 2:
+					rs.last();
+					System.out.println("Roll :" + rs.getInt(1) + " Name :" + rs.getString(2) + " TSalary : " + rs.getString(3));
+					break;
+				case 3:
+					rs.next();
+					if (rs.isAfterLast())
+						System.out.println("Can't move forword");
+					else
+						System.out.println("Roll :" + rs.getInt(1) + " Name :" + rs.getString(2) + " TSalary : " + rs.getString(3));
+					break;
+				case 4:
+					rs.previous();
+					if (rs.isBeforeFirst())
+						System.out.println("Can't move backword");
+					else
+						System.out.println("Roll :" + rs.getInt(1) + " Name :" + rs.getString(2) + " TSalary : " + rs.getString(3));
+					break;
+				case 5:
+					break;
+				default:
+					System.out.println("Enter valid operation");
+				}
+			} while (ch != 5);
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
