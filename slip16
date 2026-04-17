@@ -5,8 +5,8 @@ create database student;
 create table Teacher (TNo int primary key, TName varchar(20), Subject varchar(20));
 
 cmd--
-javac -cp.; driver filename.java
-java -cp.; driver filename
+javac -cp.; driver Main.java
+java -cp.; driver Main
 
 Q1->
 cmd--
