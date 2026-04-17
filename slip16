@@ -1,7 +1,7 @@
 Q2->
 pgsql--
 create database student;
-\c college;
+\c student;
 create table Teacher (TNo int primary key, TName varchar(20), Subject varchar(20));
 
 cmd--
