@@ -1,0 +1,14 @@
+Q2->
+pgsql--
+create database college;
+\c college;
+create table Teacher (TNo int primary key, TName varchar(20), Subject varchar(20));
+
+cmd--
+javac -cp.; driver filename.java
+java -cp.; driver filename
+
+Q1->
+cmd--
+javac filename.java
+java filename
