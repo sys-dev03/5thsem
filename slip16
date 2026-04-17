@@ -10,5 +10,5 @@ java -cp.; driver Main
 
 Q1->
 cmd--
-javac filename.java
-java filename
+javac Main.java
+java Main
