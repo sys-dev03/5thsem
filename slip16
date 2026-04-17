@@ -1,6 +1,6 @@
 Q2->
 pgsql--
-create database college;
+create database student;
 \c college;
 create table Teacher (TNo int primary key, TName varchar(20), Subject varchar(20));
 
